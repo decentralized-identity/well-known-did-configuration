@@ -40,6 +40,6 @@ Contact: public-credentials@w3.org
 |implementer|implementation|git repository|date last checked (m-d-y)|
 |---|---|---|---|
 |dif| [verification](https://check.identinet.io/) | https://github.com/identinet/check |10-09-25|
-|Impierce| resolving, JSON validation of multiple did methods | https://github.com/impierce/did-manager |10-09-25|
-|Impierce| verification | https://github.com/impierce/identity-wallet/tree/dev/identity-wallet/src/state/did |10-09-25|
-|Impierce| DID document creation | https://github.com/impierce/ssi-agent/blob/beta/agent_identity/src/state.rs |10-09-25|
+|Impierce Technologies| resolving, JSON validation of multiple did methods | https://github.com/impierce/did-manager |10-09-25|
+|Impierce Technologies| verification | https://github.com/impierce/identity-wallet/tree/dev/identity-wallet/src/state/did |10-09-25|
+|Impierce Technologies| DID document creation | https://github.com/impierce/ssi-agent/blob/beta/agent_identity/src/state.rs |10-09-25|
