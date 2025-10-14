@@ -4,7 +4,7 @@
 
 This specification defines a way for a website to prove that its DID is verifiably linked to that website. Well-Known DID configuration builds on and is an extension to the core [DID specification](https://www.w3.org/TR/did-1.0/). The examples in this spec of the [did:web Method specification](https://w3c-ccg.github.io/did-method-web/). Furthermore, it  establishes the `/.well-known/did-configuration.json` URI pattern, which is [IANA registered](https://www.iana.org/assignments/well-known-uris/well-known-uris.xhtml).
 
-> Note: The examples in this spec mostly make use of the [did:web Method specification](https://w3c-ccg.github.io/did-method-web/). However, this specification works with any DID method supporting the `services` property in the [DID document](https://www.w3.org/TR/did-1.0/#services) (e.g. did:jwk and [did:key](https://w3c-ccg.github.io/did-key-spec/) don't support this, [did:web](https://w3c-ccg.github.io/did-method-web/) and [did:iota](https://docs.iota.org/developer/iota-identity/references/iota-did-method-spec) do support it.)
+> Note: The examples in this spec mostly make use of the [did:web Method specification](https://w3c-ccg.github.io/did-method-web/). However, this specification works with any DID method supporting the `services` property in the [DID document](https://www.w3.org/TR/did-1.0/#services) (e.g. did:jwk and [did:key](https://w3c-ccg.github.io/did-key-spec/) don't support this, [did:web](https://w3c-ccg.github.io/did-method-web/) and [did:iota](https://docs.iota.org/developer/iota-identity/references/iota-did-method-spec) do support it)
 
 ## What this solves
 
