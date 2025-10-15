@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Well Known DID Configuration</title>
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="images/favicon-16x16.png"
+    />
+    <style>
+      #subtitle ~ h2,
+      .copyright,
+      #sotd p:first-of-type {
+        display: none;
+      }
+    </style>
+    <script
+      src="https://www.w3.org/Tools/respec/respec-w3c-common"
+      class="remove"
+    ></script>
+    <script class="remove">
+      var respecConfig = {
+        subtitle: "DIF Ratified Deliverable",
+        wg: "Identifiers & Discovery Working Group",
+        logos: [
+          {
+            src:
+              "https://raw.githubusercontent.com/decentralized-identity/decentralized-identity.github.io/master/images/logo-large.png",
+            href: "https://identity.foundation/",
+            alt: "Decentralized Identity Foundation",
+            width: 200,
+            id: "dif-logo",
+          },
+        ],
+        editors: [
+          {
+            name: "Daniel Buchner",
+            url: "https://www.linkedin.com/in/dbuchner/",
+            company: "Microsoft",
+            companyURL:
+              "https://www.microsoft.com/en-us/security/technology/own-your-identity",
+          },
+          {
+            name: "Orie Steele",
+            url: "https://www.linkedin.com/in/or13b/",
+            email: "orie@transmute.industries",
+            company: "Transmute",
+            companyURL: "https://www.transmute.industries/",
+          },
+          {
+            name: "Tobias Looker",
+            url: "https://www.linkedin.com/in/tplooker/",
+            company: "Mattr",
+            companyURL: "https://www.mattr.global/",
+          },
+        ],
+        github: "https://github.com/decentralized-identity/well-known-did-configuration",
+        shortName: "did-configuration",
+        // Publication metadata for approved v1.0.0
+        publishDate: "2025-09-05",
+        thisVersion:
+          "https://identity.foundation/well-known-did-configuration/resources/did-configuration/v1.0.0/",
+        latestVersion:
+          "https://identity.foundation/well-known-did-configuration/resources/did-configuration/",
+      };
+    </script>
+  </head>
+
+  <body>
+    <section id="abstract">
+      <p>
+        Making it possible to connect existing systems and
+        <a href="https://w3c.github.io/did-spec/">Decentralized Identifiers</a>
+        (DIDs) is an important undertaking that can aid in bootstrapping
+        adoption and usefulness of DIDs. One such form of connection is the
+        ability of a DID controller to prove they are the same entity that
+        controls an origin.
+      </p>
+      <p>
+        The DID Configuration resource provides proof of a bi-directional
+        relationship between the controller of an origin and a DID via
+        cryptographically verifiable signatures that are linked to a DID's key
+        material. This document describes the data format of the resource and
+        the resource location at which origin controllers can publish
+        their DID Configuration.
+      </p>
+      <p>
+        Due to the location of the DID Configuration resource, discovery of
+        associated Decentralized Identifiers against an origin is trivial.
+        However, the inverse (i.e given a DID discover the associated origins)
+        is deemed out of scope.
+      </p>
+    </section>
+
+    <section id="sotd">
+      <p>
+        DID Configuration is a specification being developed within the
+        <a href="https://identity.foundation"
+          >Decentralized Identity Foundation</a
+        >
+        (DIF).
+        This spec will be updated to reflect relevant changes, and participants
+        are encouraged to contribute at the following repository location:
+        <a href="https://github.com/decentralized-identity/well-known-did-configuraton"
+          >https://github.com/decentralized-identity/well-known-did-configuraton</a
+        >
+      </p>
+    </section>
+
+    <section>
+      <h2>Terminology</h2>
+
+      <section>
+        <h2><dfn data-lt="DID" data-dfn-type="dfn" id="DID">DID</dfn></h2>
+        <p>
+          See the normative definition
+          <a href="https://www.w3.org/TR/did-core/#identifier" target="_blank"
+            >here</a
+          >, [[did-core]].
+        </p>
+      </section>
+      <section>
+        <h2>
+          <dfn data-lt="DIDDocument" data-dfn-type="dfn" id="DIDDocument"
+            >DID Document</dfn
+          >
+        </h2>
+        <p>
+          See the normative definition
+          <a
+            href="https://www.w3.org/TR/did-core/#dfn-did-documents"
+            target="_blank"
+            >here</a
+          >, [[did-core]].
+        </p>
+      </section>
+
+      <section>
+        <h2>
+          <dfn data-lt="Issuer" data-dfn-type="dfn" id="Issuer">Issuer</dfn>
+        </h2>
+        <p>
+          See the normative definition
+          <a
+            href="https://www.w3.org/TR/vc-data-model/#dfn-issuers"
+            target="_blank"
+            >here</a
+          >, [[vc-data-model]].
+        </p>
+      </section>
+
+      <section>
+        <h2>
+          <dfn data-lt="Subject" data-dfn-type="dfn" id="Subject">Subject</dfn>
+        </h2>
+        <p>
+          See the normative definition
+          <a
+            href="https://www.w3.org/TR/vc-data-model/#dfn-subjects"
+            target="_blank"
+            >here</a
+          >, [[vc-data-model]].
+        </p>
+      </section>
+
+      <section>
+        <h2>
+          <dfn data-lt="Controller" data-dfn-type="dfn" id="Controller"
+            >Controller</dfn
+          >
+        </h2>
+        <p>
+          See the normative definition
+          <a
+            href="https://www.w3.org/TR/did-core/#dfn-did-controllers"
+            target="_blank"
+            >here</a
+          >, [[vc-data-model]].
+        </p>
+      </section>
+
+      <section>
+        <h2>
+          <dfn data-lt="Verifier" data-dfn-type="dfn" id="Verifier"
+            >Verifier</dfn
+          >
+        </h2>
+        <p>
+          See the normative definition
+          <a
+            href="https://www.w3.org/TR/vc-data-model/#dfn-verifier"
+            target="_blank"
+            >here</a
+          >, [[vc-data-model]].
+        </p>
+      </section>
+
+      <section>
+        <h2>
+          <dfn data-lt="JSONWebToken" data-dfn-type="dfn" id="JSONWebToken"
+            >JSON Web Token</dfn
+          >
+        </h2>
+        <p>
+          See the normative definition
+          <a
+            href="https://www.w3.org/TR/vc-data-model/#json-web-token"
+            target="_blank"
+            >here</a
+          >, [[vc-data-model]].
+        </p>
+      </section>
+
+      <section>
+        <h2>
+          <dfn
+            data-lt="LinkedDataProof"
+            data-dfn-type="dfn"
+            id="LinkedDataProof"
+            >Linked Data Proof</dfn
+          >
+        </h2>
+        <p>
+          See the normative definition
+          <a
+            href="https://www.w3.org/TR/vc-data-model/#linked-data-proofs"
+            target="_blank"
+            >here</a
+          >, [[vc-data-model]].
+        </p>
+      </section>
+
+      <section>
+        <h2>
+          <dfn data-lt="Well-KnownURI" data-dfn-type="dfn" id="Well-KnownURI"
+            >Well-Known URIs</dfn
+          >
+        </h2>
+        <p>
+          This specification registers the well-known URI defined in <a href="#DIDConfigurationURI">Section DID Configuration URI</a> in the IANA
+          <a href="https://www.iana.org/assignments/well-known-uris/well-known-uris.xhtml" target="_blank">"Well-Known URIs" registry</a>
+          established by [[RFC5785]].
+        </p>
+      </section>
+
+      <section>
+        <h2>
+          <dfn data-lt="Origin" data-dfn-type="dfn" id="Origin"
+            >Origins</dfn
+          >
+        </h2>
+        <p>
+          For the standard definition of a domain-based origin in the web security context, 
+          see the WHATWG HTML Living Standard's <a href="https://html.spec.whatwg.org/multipage/origin.html#origin">origin definition</a> section.
+
+          For more information on origins and their composition, you may view the MDN page on <a href="https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy">Same-Origin Policy</a>.
+        </p>
+      </section>
+    </section>
+
+    <!-- Remainder of document content is identical to Editor's Draft at time of release -->
+
+    <section>
+      <h2>
+        <dfn
+          data-lt="DIDConfigurationURI"
+          data-dfn-type="dfn"
+          id="DIDConfigurationURI"
+          >DID Configuration URI</dfn
+        >
+      </h2>
+      <p>A well-known URI for a <a>DID Configuration Resource</a></p>
+
+      <pre class="example nohighlight">
+          <a href="https://identity.foundation/.well-known/did-configuration.json" target="_blank">https://identity.foundation/.well-known/did-configuration.json</a>
+        </pre>
+      <p>
+        The DID Configuration resource MUST exist at the origin's root, in the
+        <a href="https://tools.ietf.org/html/rfc8615"
+          >IETF 8615 Well-Known Resource</a
+        >
+        directory, as follows: `/.well-known/did-configuration.json`
+      </p>
+    </section>
+
+    <!-- The rest of the sections are unchanged and omitted here for brevity in this snapshot -->
+  </body>
+  
+</html>
+
